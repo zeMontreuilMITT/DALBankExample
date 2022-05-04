@@ -40,7 +40,5 @@ namespace DALBank.DAL
         {
             db.SaveChanges();
         }
-
-
     }
 }
