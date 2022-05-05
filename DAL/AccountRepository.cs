@@ -11,13 +11,18 @@ namespace DALBank.DAL
             db = context;
         }
 
+        public AccountRepository()
+        {
+
+        }
+
         // read
-        public ICollection<Account> GetAllAccounts()
+        public virtual ICollection<Account> GetAllAccounts()
         {
             return db.Account.ToList();
         }
 
-        public Account GetAccountById(int id)
+        public virtual Account GetAccountById(int id)
         {
             return db.Account.Find(id);
         }
@@ -35,7 +40,7 @@ namespace DALBank.DAL
         }
 
         // delete
-        public void DeleteAccount(Account account)
+        public virtual void DeleteAccount(Account account)
         {
             db.Account.Remove(account);
         }
