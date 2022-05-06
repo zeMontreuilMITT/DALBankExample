@@ -18,27 +18,29 @@ var app = builder.Build();
 app.MapGet("/accounts", (DALBankContext db) =>
 {
     AccountRepository repo = new AccountRepository(db);
-    return repo.GetAllAccounts();
+    AccountBusinessLogic accountBL = new AccountBusinessLogic(repo);
+    return accountBL.GetAllAccounts();
 });
 
 app.MapGet("/accounts/{id}", (DALBankContext db, int id) =>
 {
     AccountRepository repo = new AccountRepository(db);
-    return repo.GetAccountById(id);
+    AccountBusinessLogic accountBL = new AccountBusinessLogic(repo);
+    return accountBL.GetAccountById(id);
     // create a means of handling a bad request
 });
 
 app.MapPost("/accounts", (DALBankContext db, Account newAccount) =>
 {
     AccountRepository repo = new AccountRepository(db);
-    repo.CreateAccount(newAccount);
+    repo.Add(newAccount);
     repo.Save();
 });
 
 app.MapPost("/accounts/{id}", (DALBankContext db, Account updatedAccount) =>
 {
     AccountRepository repo = new AccountRepository(db);
-    repo.UpdateAccount(updatedAccount);
+    repo.Update(updatedAccount);
     repo.Save();
 });
 

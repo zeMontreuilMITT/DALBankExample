@@ -11,9 +11,20 @@ namespace DALBank.BLL
             Repo = repo;
         }
 
+        public Account GetAccountById(int id)
+        {
+            return Repo.Get(a => a.Id == id);
+            // a => return a.Id == id;
+        }
+
+        public List<Account> GetAllAccounts()
+        {
+            return Repo.GetList(a => true).ToList();
+        }
+
         public double GetBalance(int id)
         {
-            var account = Repo.GetAccountById(id);
+            var account = GetAccountById(id);
 
             if(account == null)
             {
@@ -28,12 +39,12 @@ namespace DALBank.BLL
 
         public double GetTotalBalanceOfCustomer(int customerId)
         {
-            return Repo.GetAllAccounts().Where(a => a.CustomerId == customerId).Sum(a => a.Balance);
+            return GetAllAccounts().Where(a => a.CustomerId == customerId).Sum(a => a.Balance);
         }
         public void Withdraw(int id, double amount)
         {
             // get the account
-            Account account = Repo.GetAccountById(id);
+            Account account = GetAccountById(id);
 
             if(account != null)
             {
@@ -59,7 +70,7 @@ namespace DALBank.BLL
 
         public List<Account> GetAllAccountsOfCustomer(int customerId)
         {
-            return Repo.GetAllAccounts().Where(a => a.CustomerId == customerId && a.IsActive).ToList();
+            return Repo.GetList(a => a.CustomerId == customerId && a.IsActive).ToList();
         }
         public void CloseAccount(Account account)
         {
